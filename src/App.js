@@ -6,7 +6,7 @@ import Tracker from './Tracker';
 function App() {
   return (
     <div>
-      {Tracker}
+      <Tracker/>
     </div>
   );
 }
