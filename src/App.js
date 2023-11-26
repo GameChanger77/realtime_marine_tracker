@@ -19,15 +19,23 @@ function App() {
     }
   };
 
+  const handleAboutButtonClick = () => {
+    setPage(2);
+  };
+
+  const handleSettingsButtonClick = () => {
+    setPage(1);
+  };
+
   return (
     <div>
       <header>
         <h1>Realtime Marine Tracker</h1>
         <p>
-          <button id="about-button" class="about-button">
+          <button id="about-button" class="about-button" onClick={handleAboutButtonClick}>
             About
           </button>
-          <button id="settings-button" class="settings-button">
+          <button id="settings-button" class="settings-button" onClick={handleSettingsButtonClick}>
             Settings
           </button>
         </p>
