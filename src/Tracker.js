@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Tracker = () => {
+const Tracker = ({ humidityThreshold, tempThreshold, waterThreshold }) => {
   const [data, setData] = useState([]);
   const [temp, setTemp] = useState(-999);
   const [humidity, setHumidity] = useState(-1);
@@ -36,6 +36,7 @@ const Tracker = () => {
     <div>
       this is the tracker page
       <div>{humidity}</div>
+      {(humidity > humidityThreshold) ? <div>Warning</div> : <div>Everything is fine</div>}
     </div>
   );
 };

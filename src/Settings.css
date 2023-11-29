@@ -1,0 +1,60 @@
+.infoBox, .thresholdBox {
+    border: 2px solid #000;
+    padding: 10px;
+    height: 50px;
+    text-align: left;
+    font-size: 28pt;
+    font-weight: bold;
+    display: inline-block;
+
+    margin-top: 30px;
+}
+
+
+.infoBox {
+    width: 400px;
+    margin-left: 100px;
+}
+
+.thresholdBox {
+    width: 150px;
+}
+
+/* .toggleSwitch {
+    margin-top: 30px;
+    float: right;
+    margin-right: 10%;
+} */
+
+.toggleSwitch {
+    margin-top: 40px;
+    float: right;
+    margin-right: 7%;
+    width: 100px;
+    height: 50px;
+    color: white;
+    font-weight: bold;
+    border-radius: 1px; /* Adjust border-radius for rounded corners */
+    background-color: red; /* Default color for "Off" position */
+    cursor: pointer;
+}
+
+.toggleSwitch.on {
+    background-color: green; /* Color for "On" position */
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    margin: 0;
+    font-size: 20pt;
+    box-sizing: border-box;
+    border: 2px solid #555;
+    border-radius: 4px;
+  }
+  
+  input[type="text"]:focus {
+    border: 2px solid #007bff;
+    outline: none;
+  }

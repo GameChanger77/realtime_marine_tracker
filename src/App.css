@@ -47,7 +47,7 @@ header {
   z-index: 10;
 }
 
-.settings-button {
+.primary-button {
   background-color: rgb(0, 4, 76);
   color: beige;
   font-family: Arial, sans-serif;
@@ -61,7 +61,17 @@ header {
   height: 70px;
 }
 
-.about-button {
+.primary-button img {
+  filter:invert(100%);
+  width: 50px;
+}
+
+.secondary-button img {
+  filter:invert(100%);
+  width: 50px;
+}
+
+.secondary-button {
   background-color: rgb(0, 4, 76);
   color: beige;
   font-family: Arial, sans-serif;
@@ -76,6 +86,10 @@ header {
 }
 .about-button:hover {
   background-color: #06376b; 
+}
+
+.content {
+  margin: 80px;
 }
 
 header>h1 {
