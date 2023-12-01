@@ -65,7 +65,6 @@ const Tracker = ({
       <div>{humidity}</div>
       <div>{temp}</div>
       <div>{waterLevel}</div>
-      {warning}
     </div>
   );
 };
