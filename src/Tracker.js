@@ -1,24 +1,47 @@
 import React, { useState, useEffect } from 'react';
+import "./Tracker.css";
 
-const Tracker = ({ humidityThreshold, tempThreshold, waterThreshold }) => {
-  const [data, setData] = useState([]);
+const Tracker = ({
+  humidityThreshold,
+  tempThreshold,
+  waterThreshold,
+  isHumidityWarningOn,
+  isTemperatureWarningOn,
+  isWaterWarningOn,
+}) => {
   const [temp, setTemp] = useState(-999);
   const [humidity, setHumidity] = useState(-1);
   const [waterLevel, setWaterLevel] = useState(-1);
+  const [warning, setWarning] = useState(false);
+  const [warningMessage, setWarningMessage] = useState("");
 
   function loadData(data) {
     console.log(data);
-    setData(data);
     setTemp(data.temp);
     setHumidity(data.humidity);
     setWaterLevel(data.waterLevel);
+
+    if((data.temp > tempThreshold) && isTemperatureWarningOn){
+      setWarning(true)
+      setWarningMessage("Temperature is too high!");
+    }
+
+    if ((data.humidity > humidityThreshold) && isHumidityWarningOn) {
+      setWarning(true);
+      setWarningMessage("Humidity is too high!");
+    }
+
+    if ((data.waterLevel > waterThreshold) && isWaterWarningOn) {
+      setWarning(true);
+      setWarningMessage("Water level is too high!");
+    }
   }
 
   function fetchData() {
-    fetch('./data.json')
+    fetch("./data.json")
       .then((response) => response.json())
       .then((data) => loadData(data))
-      .catch((error) => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching data:", error));
   }
 
   // Use useEffect to fetch data on component mount
@@ -34,9 +57,15 @@ const Tracker = ({ humidityThreshold, tempThreshold, waterThreshold }) => {
 
   return (
     <div>
+      <div id="overlay" style={{ display: warning ? "block" : "none" }}></div>
+      <div id="warning" style={{ display: warning ? "block" : "none" }}>
+        WARNING!!<br/>{warningMessage}
+      </div>
       this is the tracker page
       <div>{humidity}</div>
-      {(humidity > humidityThreshold) ? <div>Warning</div> : <div>Everything is fine</div>}
+      <div>{temp}</div>
+      <div>{waterLevel}</div>
+      {warning}
     </div>
   );
 };

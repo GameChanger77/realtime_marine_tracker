@@ -20,7 +20,10 @@ function App() {
         return <Tracker 
         humidityThreshold={humidityThreshold}
         tempThreshold={tempThreshold}
-        waterThreshold={waterThreshold}/>;
+        waterThreshold={waterThreshold}
+        isHumidityWarningOn={isHumidityWarningOn}
+        isTemperatureWarningOn={isTemperatureWarningOn}
+        isWaterWarningOn={isWaterWarningOn}/>;
       case 1: // Settings Page
         return <Settings 
         humidityThreshold={humidityThreshold}
