@@ -1,0 +1,37 @@
+
+.sensor-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.waterlevel-container {
+  width: 100px;
+  height: 200px;
+  position: relative;
+}
+.single-chart-container{
+  position: relative;
+  transform: scale(0.4);
+  margin-left: 10px;
+  max-width: 100;
+  width: 100%;
+}
+.chart-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%; /* Ensure the chart container doesn't exceed its parent */
+  width: 100%; /* Take the available width */
+}
+
+.dial-container{
+  transform: rotate(135deg);
+ width: 300px;
+ height: auto;
+}
+.outer-container{
+  width: 300px;
+  height: 300px;
+}
