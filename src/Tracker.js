@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import "./Tracker.css";
-
+import DrawGauge from "./dial.js";
+import LinearGauge from './gauge.js';
+import LineChart from './LineChart.js';
+const dataPoints = [10,15,20,30,40,50,10,30];
 const Tracker = ({
   humidityThreshold,
   tempThreshold,
@@ -54,18 +57,29 @@ const Tracker = ({
     // Clean up the interval on component unmount
     return () => clearInterval(intervalId);
   }, []); // Empty dependency array ensures useEffect runs only once on mount
-
+  
   return (
     <div>
       <div id="overlay" style={{ display: warning ? "block" : "none" }}></div>
       <div id="warning" style={{ display: warning ? "block" : "none" }}>
         WARNING!!<br/>{warningMessage}
       </div>
-      this is the tracker page
-      <div>{humidity}</div>
-      <div>{temp}</div>
-      <div>{waterLevel}</div>
+      <div>
+  
+  <div class="sensor-container">
+    <div class="waterlevel-container">
+      <LinearGauge waterLevel={waterLevel} limitLevel={waterThreshold}/>
     </div>
+      <DrawGauge value={temp} endValue={250} limitValue={tempThreshold} />
+      <DrawGauge value={humidity} endValue={100} limitValue={humidityThreshold} />
+  </div>
+  <div class = "chart-container">
+    <LineChart dataPoints={dataPoints} title={"temperature"} maxChartValue={250}/>
+    <LineChart dataPoints={dataPoints} title={"humidity"} maxChartValue={100}/>
+    <LineChart dataPoints={dataPoints} title={"waterLevel"} maxChartValue={100}/>
+  </div>
+</div>
+</div>
   );
 };
 
