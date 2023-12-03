@@ -42,6 +42,8 @@ while True:
         humidity = lastHumidity
         temperature = lastTemp
     
+    waterLevel = 1.1159 * (waterLevel) - 353
+
     dictionary = {
     "temp" : temperature,
     "humidity" : humidity,
