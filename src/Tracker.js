@@ -75,7 +75,7 @@ const Tracker = ({
     setWaterLevelDataPoints(waterLevelDataPoints => {
       const updatedDataPoints = [...waterLevelDataPoints]; // Create a copy of the array
       updatedDataPoints[indexToUpdate] = newValue; // Update the specific index
-      //console.log(updatedDataPoints);
+      console.log(updatedDataPoints);
       return updatedDataPoints.slice(0,8); // Set the state with the updated array
     });
   };
