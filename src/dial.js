@@ -27,8 +27,8 @@ function DrawGauge({ value, endValue, limitValue }) {
         const degrees = scaledValue + startAngle;
 
         if (value % (endValue / 4) === 0) {
-          radiantLine(cx, cy, innerRadius, outerRadius, degrees, lineWidth, "black");
-          radiantLine(cx, cy, innerRadius, outerRadius, ((limitValue / endValue) * 270), lineWidth, "red");
+          radiantLine(cx, cy, innerRadius-5, outerRadius, degrees, lineWidth, "black");
+          radiantLine(cx, cy, innerRadius-5, outerRadius+5, ((limitValue / endValue) * 270), 4, "red");
           renderText(ctx, cx, cy, outerRadius + 10, degrees, value.toString(), "black");
         } else {
           const shorterLine = (outerRadius - innerRadius) / 2;
@@ -52,6 +52,12 @@ function DrawGauge({ value, endValue, limitValue }) {
 
       ctx.beginPath();
       ctx.arc(cx, cy, outerRadius, startAngle * Math.PI / 180, 1.5 * Math.PI, false);
+      ctx.strokeStyle = "gray";
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, innerRadius-5, startAngle * Math.PI / 180, 1.5 * Math.PI, false);
       ctx.strokeStyle = "gray";
       ctx.lineWidth = 0.5;
       ctx.stroke();
