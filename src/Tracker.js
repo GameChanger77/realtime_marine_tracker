@@ -62,7 +62,7 @@ const Tracker = ({
         WARNING!!<br/>{warningMessage}
       </div>
       this is the tracker page
-      <div>{humidity}</div>
+      <div>{humidity + "    " + humidityThreshold} </div>
       <div>{temp}</div>
       <div>{waterLevel}</div>
     </div>
