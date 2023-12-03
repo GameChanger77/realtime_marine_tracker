@@ -16,6 +16,8 @@ import sys
 import Adafruit_DHT
 import json
 import serial
+from datetime import datetime
+import time
 
 print("Beginning Realtime Marine Tracking...")
 
@@ -57,4 +59,6 @@ while True:
     print(f'Temp: {temperature} C  Humidity: {humidity} % Water Level:{waterLevel}')
     lastTemp = temperature
     lastHumidity = humidity
+
+
     

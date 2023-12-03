@@ -1,16 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-const LineChart = ({ dataPoints, title, maxChartValue}) => {
+const LineChart = ({ dataPoints, timePoints, title, maxChartValue}) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
     let myChart = null;
 
     const data = {
-      labels: [
-        'Point 1', 'Point 2', 'Point 3', 'Point 4', 'Point 5', 'Point 6', 'Point 7', 'Point 8'
-      ],
+      labels: timePoints,
       datasets: [
         {
           label: title,
