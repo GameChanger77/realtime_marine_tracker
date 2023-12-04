@@ -4,8 +4,8 @@ import Chart from 'chart.js/auto';
 const LineChart = ({ dataPoints, timePoints, title, maxChartValue}) => {
   
   const chartRef = useRef(null);
-  var slicedDataPoints = dataPoints.slice(9,17);
-  var slicedTimePoints = timePoints.slice(9,17);
+  var slicedDataPoints = dataPoints.slice(dataPoints.length-8, dataPoints.length-1);
+  var slicedTimePoints = timePoints.slice(timePoints.length-8, timePoints.length-1);
   console.log(slicedDataPoints);
   useEffect(() => {
     let myChart = null;

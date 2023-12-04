@@ -7,7 +7,7 @@ import sys
 # MariaDB Connection Configuration
 try:
     conn = mariadb.connect(
-        user="root",
+        user="tim",
         password="root",
         host="10.26.53.178",
         port=3306,
@@ -24,7 +24,7 @@ while True:
     current_time = now.strftime("%H:00")
     current_time_seconds = now.strftime("%S")
 
-    if current_time_seconds == "50":
+    if current_time_seconds == "20":
         # Fetching the largest 'id' from the 'sensordata' table
         cursor.execute("SELECT MAX(id) FROM sensordata")
         largest_id = cursor.fetchone()[0]
@@ -55,7 +55,7 @@ while True:
                 print(f"Error: {e}")
                 conn.rollback()
 
-    time.sleep(1000)
+    time.sleep(1)
 
 # Close the database connection at the end
 conn.close()

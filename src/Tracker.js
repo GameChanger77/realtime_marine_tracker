@@ -17,10 +17,15 @@ const Tracker = ({
   const [warning, setWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [highestId, setHighestId] = useState(0);
-  const [tempDataPoints, setTempDataPoints] = useState([]);
-  const [humidityDataPoints, setHumidityDataPoints] = useState([]);
-  const [waterLevelDataPoints, setWaterLevelDataPoints] = useState([]);
-  const [timeArray, setTimeArray] = useState([]);
+  const [tempDataPoints, setTempDataPoints] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+  const [humidityDataPoints, setHumidityDataPoints] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+  const [waterLevelDataPoints, setWaterLevelDataPoints] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+  const [timeArray, setTimeArray] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+  
+  //const tempDataPoints = [0, 0, 0, 0, 0, 0, 0, 0];
+  //const humidityDataPoints = [0, 0, 0, 0, 0, 0, 0, 0];
+  //const waterLevelDataPoints = [0, 0, 0, 0, 0, 0, 0, 0];
+  //const timeArray = [0, 0, 0, 0, 0, 0, 0, 0];
 
   function loadData(data) {
     //console.log(data);
@@ -53,18 +58,30 @@ const Tracker = ({
   }
 
   function getMethodById(id) {
-    fetch('http://10.26.253.178:8081/listData/' + id)
+    fetch('http://10.26.53.178:8081/listData/' + id)
     .then(response => response.json())
     .then(data => {
-      updateTimeDataPoints(data.CurrentTime, id - highestId + 7);
-      updateTempDataPoints(data.Temperature, id - highestId + 7);
-      updateHumidityDataPoints(data.Humidity, id - highestId + 7);
-      updateWaterLevelDataPoints(data.WaterLevel, id - highestId + 7);
-      //console.log(waterLevelDataPoints);
+      //updateTimeDataPoints(data.CurrentTime, id - highestId + 7);
+      console.log("CURRENT TIME======" + data.CurrentTime);
+      //updateTempDataPoints(data.Temperature, id - highestId + 7);
+      //updateHumidityDataPoints(data.Humidity, id - highestId + 7);
+      //updateWaterLevelDataPoints(data.WaterLevel, id - highestId + 7);
+      console.log(id-highestId+7);
+      timeArray[id-highestId+7] = data.CurrentTime;
+      humidityDataPoints[id-highestId+7] = data.Humidity;
+      tempDataPoints[id-highestId+7] = data.Temperature;
+      waterLevelDataPoints[id-highestId+7] = data.WaterLevel;
+      
+      console.log("waterLevel data poihts:" + waterLevelDataPoints);
+      
+      console.log("temp data poihts:" + tempDataPoints);
+      console.log("humidity data poihts:" + humidityDataPoints);
+      console.log("time stuff: " + timeArray);
+      
   });
   }
 
-  const updateTempDataPoints = (newValue, indexToUpdate) => {
+  /*const updateTempDataPoints = (newValue, indexToUpdate) => {
     setTempDataPoints(tempDataPoints => {
       const updatedDataPoints = [...tempDataPoints];
       updatedDataPoints[indexToUpdate] = newValue;
@@ -91,16 +108,19 @@ const Tracker = ({
       updatedDataPoints[indexToUpdate] = newValue; // Update the specific index
       return updatedDataPoints;
     });
-  };
+  };*/
 
   function getMostRecentData(){
     fetch('http://10.26.53.178:8081/latestID')
     .then(response => response.json())
     .then(data => {
     setHighestId(data.id);
+    console.log("highest id: " + data.id);
     for (let i = data.id; i > data.id-8;  i--){
-      if (i > 0)
+      if (i > 0){
+        console.log("====================" + i);
         getMethodById(i);
+      }
     }
   });
     
