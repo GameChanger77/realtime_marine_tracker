@@ -53,7 +53,7 @@ const Tracker = ({
   }
 
   function getMethodById(id) {
-    fetch('http://localhost:8081/listData/' + id)
+    fetch('http://10.26.253.178:8081/listData/' + id)
     .then(response => response.json())
     .then(data => {
       updateTimeDataPoints(data.CurrentTime, id - highestId + 7);
@@ -94,7 +94,7 @@ const Tracker = ({
   };
 
   function getMostRecentData(){
-    fetch('http://localhost:8081/latestID')
+    fetch('http://10.26.53.178:8081/latestID')
     .then(response => response.json())
     .then(data => {
     setHighestId(data.id);

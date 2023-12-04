@@ -9,7 +9,7 @@ try:
     conn = mariadb.connect(
         user="root",
         password="root",
-        host="localhost",
+        host="10.26.53.178",
         port=3306,
         database="sensordata"
     )

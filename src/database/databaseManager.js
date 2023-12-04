@@ -20,7 +20,7 @@ const pool = mariadb.createPool({
 app.use(cors());
 app.use(bodyParser.json());
 const port = "8081";
-const host = "localhost";
+const host = "10.26.53.178";
 app.listen(port, () => {
   console.log("App listening at http://%s:%s", host, port);
 });
