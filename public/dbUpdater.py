@@ -4,7 +4,7 @@ import json
 from pymongo import MongoClient
 
 # Establish a connection to MongoDB
-client = MongoClient('localhost', 27017)  # Update with your MongoDB connection details
+client = MongoClient('10.26.49.19', 27017)  # Update with your MongoDB connection details
 db = client.SensorData  # Assuming SensorData is your database name
 collection = db.timeData  # Assuming timeData is your collection name
 
