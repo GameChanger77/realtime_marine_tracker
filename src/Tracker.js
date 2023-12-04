@@ -69,8 +69,7 @@ const Tracker = ({
     setTempDataPoints(tempDataPoints => {
       const updatedDataPoints = [...tempDataPoints]; // Create a copy of the array
       updatedDataPoints[indexToUpdate] = newValue; // Update the specific index
-      var myArray = updatedDataPoints.filter((value) => value !== undefined);
-      return myArray; // Set the state with the updated array
+      return updatedDataPoints;
     });
   };
   const updateWaterLevelDataPoints = (newValue, indexToUpdate) => {
@@ -78,32 +77,25 @@ const Tracker = ({
       const updatedDataPoints = [...waterLevelDataPoints]; // Create a copy of the array
       updatedDataPoints[indexToUpdate] = newValue; // Update the specific index
       console.log(updatedDataPoints);
-      var myArray = updatedDataPoints.filter((value) => value !== undefined);
-      return myArray; // Set the state with the updated array
+      return updatedDataPoints;
     });
   };
   const updateHumidityDataPoints = (newValue, indexToUpdate) => {
     setHumidityDataPoints(humidityDataPoints => {
       const updatedDataPoints = [...humidityDataPoints]; // Create a copy of the array
       updatedDataPoints[indexToUpdate] = newValue; // Update the specific index
-      var myArray = updatedDataPoints.filter((value) => value !== undefined);
-      return myArray; // Set the state with the updated array
+      return updatedDataPoints;
     });
   };
   const updateTimeDataPoints = (newValue, indexToUpdate) => {
     setTimeArray(timeArray => {
       const updatedDataPoints = [...timeArray]; // Create a copy of the array
       updatedDataPoints[indexToUpdate] = newValue; // Update the specific index
-      var myArray = updatedDataPoints.filter((value) => value !== undefined);
-      return myArray;
+      return updatedDataPoints;
     });
   };
 
   function getMostRecentData(){
-    timeArray.length = 8;
-    waterLevelDataPoints.length = 8;
-    tempDataPoints.length = 8;
-    humidityDataPoints.length = 8;
     fetch('http://localhost:8081/latestID')
     .then(response => response.json())
     .then(data => {

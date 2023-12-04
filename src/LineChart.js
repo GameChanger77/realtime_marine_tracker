@@ -3,16 +3,17 @@ import Chart from 'chart.js/auto';
 
 const LineChart = ({ dataPoints, timePoints, title, maxChartValue}) => {
   const chartRef = useRef(null);
-
+  var slicedDataPoints = dataPoints.slice(9,17);
+  var slicedTimePoints = timePoints.slice(9,17);
   useEffect(() => {
     let myChart = null;
 
     const data = {
-      labels: timePoints,
+      labels: slicedTimePoints,
       datasets: [
         {
           label: title,
-          data: dataPoints,
+          data: slicedDataPoints,
           borderColor: 'blue',
           backgroundColor: 'blue',
           borderWidth: 2,

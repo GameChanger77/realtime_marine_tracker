@@ -5,66 +5,82 @@ TimKuehn@iastate.edu
 var express = require("express");
 var cors = require("cors");
 var app = express();
-var fs = require("fs");
 var bodyParser = require("body-parser");
+const mariadb = require("mariadb");
+const pool = mariadb.createPool({
+  host: "127.0.0.1",
+  port: 3306,
+  user: "root",
+  password: "root",
+  database: "sensordata",
+  connectionLimit: 5
+});
+
+
 app.use(cors());
 app.use(bodyParser.json());
 const port = "8081";
 const host = "localhost";
 app.listen(port, () => {
-console.log("App listening at http://%s:%s", host, port);
+  console.log("App listening at http://%s:%s", host, port);
 });
-const { MongoClient } = require("mongodb");
-// Mongo
-const url = "mongodb://127.0.0.1:27017";
-const dbName = "SensorData";
-const client = new MongoClient(url);
-const db = client.db(dbName);
-
 
 app.get("/listData", async (req, res) => {
-    await client.connect();
-    console.log("Node connected successfully to GET MongoDB");
-    const query = {};
-    const results = await db
-    .collection("timeData")
-    .find(query)
-    .limit(100)
-    .toArray();
-    console.log(results);
-    res.status(200);
-    res.send(results);
-    });
-    
+  let conn;
+  try {
+    conn = await pool.getConnection();
+    console.log("Connected successfully to MariaDB");
+
+    const rows = await conn.query("SELECT * FROM sensordata LIMIT 8");
+    console.log(rows);
+    res.status(200).send(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  } finally {
+    if (conn) conn.release(); // release to pool
+  }
+});
+
 app.get("/listData/:id", async (req, res) => {
-const dataID = Number(req.params.id);
-console.log("Data to find :", dataID);
-await client.connect();
-console.log("Node connected successfully to GET-id MongoDB");
-const query = {"id": dataID };
-const results = await db.collection("timeData")
-.findOne(query);
-console.log("Results :", results);
-if (!results) res.send("Not Found, Idiot").status(404);
-else res.send(results).status(200);
+  let conn;
+  const dataID = Number(req.params.id);
+  console.log("Data to find:", dataID);
+
+  try {
+    conn = await pool.getConnection();
+    console.log("Connected successfully to MariaDB");
+
+    const rows = await conn.query("SELECT * FROM sensordata WHERE id = ?", [dataID]);
+    console.log("Results:", rows);
+    if (rows.length === 0) res.status(404).send("Not Found, Idiot");
+    else res.status(200).send(rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  } finally {
+    if (conn) conn.release(); // release to pool
+  }
 });
 
 app.get("/latestID", async (req, res) => {
-    await client.connect();
-    console.log("Node connected successfully to MongoDB");
-  
-    const results = await db
-      .collection("timeData")
-      .find({})
-      .sort({ id: -1 }) // Sort by ID in descending order
-      .limit(1) // Retrieve only the first document
-      .toArray();
-  
-    console.log("Latest ID result:", results[0]);
-  
-    if (results.length === 0) {
+  let conn;
+  try {
+    conn = await pool.getConnection();
+    console.log("Connected successfully to MariaDB");
+
+    const rows = await conn.query("SELECT * FROM sensordata ORDER BY id DESC LIMIT 1");
+    console.log("Latest ID result:", rows[0]);
+
+    if (rows.length === 0) {
       res.status(404).send("No data found");
     } else {
-      res.status(200).send(results[0]);
+      res.status(200).send(rows[0]);
     }
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  } finally {
+    if (conn) conn.release(); // release to pool
+  }
+});
