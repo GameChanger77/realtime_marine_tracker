@@ -8,7 +8,7 @@ var app = express();
 var bodyParser = require("body-parser");
 const mariadb = require("mariadb");
 const pool = mariadb.createPool({
-  host: "127.0.0.1",
+  host: "10.26.49.19",
   port: 3306,
   user: "root",
   password: "root",
