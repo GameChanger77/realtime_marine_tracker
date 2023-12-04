@@ -1,9 +1,11 @@
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
-
-echo "deb [arch=arm64,armhf] http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
-
-sudo apt-get update
-
-sudo apt-get install mongodb-org
-
-sudo systemctl start mongod
+INSERT INTO SensorData (Temperature, Humidity, WaterLevel, CurrentTime)
+VALUES
+  (120, 55, 70, '5:00'),
+  (200, 80, 30, '6:00'),
+  (60, 40, 85, '7:00'),
+  (150, 70, 50, '8:00'),
+  (30, 20, 10, '9:00'),
+  (180, 90, 75, '10:00'),
+  (40, 10, 5, '11:00'),
+  (40, 10, 20, '12:00'),
+  (101, 64.1, 30, '13:00');
