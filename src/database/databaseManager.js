@@ -8,9 +8,9 @@ var app = express();
 var bodyParser = require("body-parser");
 const mariadb = require("mariadb");
 const pool = mariadb.createPool({
-  host: "10.26.49.19",
+  host: "10.26.53.178",
   port: 3306,
-  user: "root",
+  user: "tim",
   password: "root",
   database: "sensordata",
   connectionLimit: 5
@@ -31,7 +31,7 @@ app.get("/listData", async (req, res) => {
     conn = await pool.getConnection();
     console.log("Connected successfully to MariaDB");
 
-    const rows = await conn.query("SELECT * FROM sensordata LIMIT 8");
+    const rows = await conn.query("SELECT * FROM sensordata");
     console.log(rows);
     res.status(200).send(rows);
   } catch (err) {
