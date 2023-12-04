@@ -23,7 +23,7 @@ const Tracker = ({
   const [timeArray, setTimeArray] = useState([]);
 
   function loadData(data) {
-    console.log(data);
+    //console.log(data);
     setTemp(data.temp);
     setHumidity(data.humidity);
     setWaterLevel(data.waterLevel);
@@ -60,23 +60,21 @@ const Tracker = ({
       updateTempDataPoints(data.Temperature, id - highestId + 7);
       updateHumidityDataPoints(data.Humidity, id - highestId + 7);
       updateWaterLevelDataPoints(data.WaterLevel, id - highestId + 7);
-      console.log(waterLevelDataPoints);
-      console.log(humidityDataPoints);
+      //console.log(waterLevelDataPoints);
   });
   }
 
   const updateTempDataPoints = (newValue, indexToUpdate) => {
     setTempDataPoints(tempDataPoints => {
-      const updatedDataPoints = [...tempDataPoints]; // Create a copy of the array
-      updatedDataPoints[indexToUpdate] = newValue; // Update the specific index
+      const updatedDataPoints = [...tempDataPoints];
+      updatedDataPoints[indexToUpdate] = newValue;
       return updatedDataPoints;
     });
   };
   const updateWaterLevelDataPoints = (newValue, indexToUpdate) => {
-    setWaterLevelDataPoints(waterLevelDataPoints => {
-      const updatedDataPoints = [...waterLevelDataPoints]; // Create a copy of the array
-      updatedDataPoints[indexToUpdate] = newValue; // Update the specific index
-      console.log(updatedDataPoints);
+    setWaterLevelDataPoints(WaterLevelDataPoints => {
+      const updatedDataPoints = [...WaterLevelDataPoints];
+      updatedDataPoints[indexToUpdate] = newValue;
       return updatedDataPoints;
     });
   };

@@ -2,9 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
 const LineChart = ({ dataPoints, timePoints, title, maxChartValue}) => {
+  
   const chartRef = useRef(null);
   var slicedDataPoints = dataPoints.slice(9,17);
   var slicedTimePoints = timePoints.slice(9,17);
+  console.log(slicedDataPoints);
   useEffect(() => {
     let myChart = null;
 
@@ -41,7 +43,7 @@ const LineChart = ({ dataPoints, timePoints, title, maxChartValue}) => {
                 borderWidth: 20, 
               },
             },
-            yAxisRange:[0,100],
+            //yAxisRange:[0,100],
             y: {
               ticks: {
                 font: {
