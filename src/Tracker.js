@@ -1,3 +1,10 @@
+/*
+Tim Kuehn
+TimKuehn@iastate.edu
+Jacob Schulmeister
+jdschul5@iastate.edu
+11/29/2023*/
+
 import React, { useState, useEffect } from 'react';
 import "./Tracker.css";
 import DrawGauge from "./dial.js";
@@ -16,19 +23,14 @@ const Tracker = ({
   const [waterLevel, setWaterLevel] = useState(-1);
   const [warning, setWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
-  const [highestId, setHighestId] = useState(0);
   const [tempDataPoints, setTempDataPoints] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
   const [humidityDataPoints, setHumidityDataPoints] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
   const [waterLevelDataPoints, setWaterLevelDataPoints] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
   const [timeArray, setTimeArray] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
   
-  //const tempDataPoints = [0, 0, 0, 0, 0, 0, 0, 0];
-  //const humidityDataPoints = [0, 0, 0, 0, 0, 0, 0, 0];
-  //const waterLevelDataPoints = [0, 0, 0, 0, 0, 0, 0, 0];
-  //const timeArray = [0, 0, 0, 0, 0, 0, 0, 0];
+  const address = "http://localhost:8081/"; // "http://10.26.53.178:8081/"; // Make sure to change settings.js too
 
   function loadData(data) {
-    //console.log(data);
     setTemp(data.temp);
     setHumidity(data.humidity);
     setWaterLevel(data.waterLevel);
@@ -50,84 +52,34 @@ const Tracker = ({
   }
 
   function fetchData() {
-    
     fetch("./data.json")
       .then((response) => response.json())
       .then((data) => loadData(data))
       .catch((error) => console.error("Error fetching data:", error));
   }
 
-  function getMethodById(id) {
-    fetch('http://10.26.53.178:8081/listData/' + id)
-    .then(response => response.json())
-    .then(data => {
-      //updateTimeDataPoints(data.CurrentTime, id - highestId + 7);
-      console.log("CURRENT TIME======" + data.CurrentTime);
-      //updateTempDataPoints(data.Temperature, id - highestId + 7);
-      //updateHumidityDataPoints(data.Humidity, id - highestId + 7);
-      //updateWaterLevelDataPoints(data.WaterLevel, id - highestId + 7);
-      console.log(id-highestId+7);
-      timeArray[id-highestId+7] = data.CurrentTime;
-      humidityDataPoints[id-highestId+7] = data.Humidity;
-      tempDataPoints[id-highestId+7] = data.Temperature;
-      waterLevelDataPoints[id-highestId+7] = data.WaterLevel;
-      
-      console.log("waterLevel data poihts:" + waterLevelDataPoints);
-      
-      console.log("temp data poihts:" + tempDataPoints);
-      console.log("humidity data poihts:" + humidityDataPoints);
-      console.log("time stuff: " + timeArray);
-      
-  });
-  }
-
-  /*const updateTempDataPoints = (newValue, indexToUpdate) => {
-    setTempDataPoints(tempDataPoints => {
-      const updatedDataPoints = [...tempDataPoints];
-      updatedDataPoints[indexToUpdate] = newValue;
-      return updatedDataPoints;
-    });
-  };
-  const updateWaterLevelDataPoints = (newValue, indexToUpdate) => {
-    setWaterLevelDataPoints(WaterLevelDataPoints => {
-      const updatedDataPoints = [...WaterLevelDataPoints];
-      updatedDataPoints[indexToUpdate] = newValue;
-      return updatedDataPoints;
-    });
-  };
-  const updateHumidityDataPoints = (newValue, indexToUpdate) => {
-    setHumidityDataPoints(humidityDataPoints => {
-      const updatedDataPoints = [...humidityDataPoints]; // Create a copy of the array
-      updatedDataPoints[indexToUpdate] = newValue; // Update the specific index
-      return updatedDataPoints;
-    });
-  };
-  const updateTimeDataPoints = (newValue, indexToUpdate) => {
-    setTimeArray(timeArray => {
-      const updatedDataPoints = [...timeArray]; // Create a copy of the array
-      updatedDataPoints[indexToUpdate] = newValue; // Update the specific index
-      return updatedDataPoints;
-    });
-  };*/
-
   function getMostRecentData(){
-    fetch('http://10.26.53.178:8081/latestID')
-    .then(response => response.json())
-    .then(data => {
-    setHighestId(data.id);
-    console.log("highest id: " + data.id);
-    for (let i = data.id; i > data.id-8;  i--){
-      if (i > 0){
-        console.log("====================" + i);
-        getMethodById(i);
-      }
-    }
+  fetch(address + 'latestDataPoints')
+  .then(response => response.json())
+  .then(data => {
+    // Assuming the response data has the same structure as expected (check the API response structure)
+    const { temperature, humidity, waterlevel, currentTime } = data;
+
+    // Update state variables with new data
+    setTempDataPoints(temperature.reverse() || [0, 0, 0, 0, 0, 0, 0, 0]);
+    setHumidityDataPoints(humidity.reverse() || [0, 0, 0, 0, 0, 0, 0, 0]);
+    setWaterLevelDataPoints(waterlevel.reverse() || [0, 0, 0, 0, 0, 0, 0, 0]);
+    setTimeArray(currentTime.reverse() || [0, 0, 0, 0, 0, 0, 0, 0]);
+  })
+  .catch(error => {
+    console.error('Error fetching latest data points:', error);
   });
-    
   }
 
   // Use useEffect to fetch data on component mount
   useEffect(() => {
+    fetchData();
+    getMostRecentData();
     
     const intervalId = setInterval(fetchData, 2000);
     const intervalId2 = setInterval(getMostRecentData, 2000);

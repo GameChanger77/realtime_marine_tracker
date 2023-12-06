@@ -4,18 +4,20 @@ import Chart from 'chart.js/auto';
 const LineChart = ({ dataPoints, timePoints, title, maxChartValue}) => {
   
   const chartRef = useRef(null);
-  var slicedDataPoints = dataPoints.slice(dataPoints.length-8, dataPoints.length-1);
-  var slicedTimePoints = timePoints.slice(timePoints.length-8, timePoints.length-1);
-  console.log(slicedDataPoints);
+  // var slicedDataPoints = dataPoints.slice(dataPoints.length-8, dataPoints.length-1);
+  // var slicedTimePoints = timePoints.slice(timePoints.length-8, timePoints.length-1);
+  console.log(dataPoints);
   useEffect(() => {
     let myChart = null;
 
     const data = {
-      labels: slicedTimePoints,
+      // labels: slicedTimePoints,
+      labels: timePoints,
       datasets: [
         {
           label: title,
-          data: slicedDataPoints,
+          // data: slicedDataPoints,
+          data:dataPoints,
           borderColor: 'blue',
           backgroundColor: 'blue',
           borderWidth: 2,
