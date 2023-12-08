@@ -20,9 +20,9 @@ const Tracker = ({
   isTemperatureWarningOn,
   isWaterWarningOn,
 }) => {
-  const [temp, setTemp] = useState(-999);
-  const [humidity, setHumidity] = useState(-1);
-  const [waterLevel, setWaterLevel] = useState(-1);
+  const [temp, setTemp] = useState(100);
+  const [humidity, setHumidity] = useState(50);
+  const [waterLevel, setWaterLevel] = useState(50);
   const [warning, setWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [tempDataPoints, setTempDataPoints] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
@@ -30,7 +30,7 @@ const Tracker = ({
   const [waterLevelDataPoints, setWaterLevelDataPoints] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
   const [timeArray, setTimeArray] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
   
-  const address = "http://localhost:8081/"; // "http://10.26.53.178:8081/"; // Make sure to change settings.js too
+  const address = "http://10.26.49.231:8081/"; // "http://10.26.53.178:8081/"; // Make sure to change settings.js too
 
   function loadData(data) {
     console.log(data);
