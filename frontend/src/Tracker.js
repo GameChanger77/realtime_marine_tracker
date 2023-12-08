@@ -18,9 +18,9 @@ const Tracker = ({
   isTemperatureWarningOn,
   isWaterWarningOn,
 }) => {
-  const [temp, setTemp] = useState(-999);
-  const [humidity, setHumidity] = useState(-1);
-  const [waterLevel, setWaterLevel] = useState(-1);
+  const [temp, setTemp] = useState(100);
+  const [humidity, setHumidity] = useState(50);
+  const [waterLevel, setWaterLevel] = useState(50);
   const [warning, setWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [tempDataPoints, setTempDataPoints] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
