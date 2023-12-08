@@ -5,11 +5,13 @@ Jacob Schulmeister
 jdschul5@iastate.edu
 11/29/2023*/
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import "./Tracker.css";
 import DrawGauge from "./dial.js";
 import LinearGauge from './gauge.js';
 import LineChart from './LineChart.js';
+
+
 const Tracker = ({
   humidityThreshold,
   tempThreshold,
@@ -31,30 +33,32 @@ const Tracker = ({
   const address = "http://localhost:8081/"; // "http://10.26.53.178:8081/"; // Make sure to change settings.js too
 
   function loadData(data) {
-    setTemp(data.temp);
-    setHumidity(data.humidity);
-    setWaterLevel(data.waterLevel);
+    console.log(data);
+    console.log(data.Temperature);
+    setTemp(data.Temperature);
+    setHumidity(data.Humidity);
+    setWaterLevel(data.WaterLevel);
 
-    if((data.temp > tempThreshold) && isTemperatureWarningOn){
+    if((data.Temperature > tempThreshold) && isTemperatureWarningOn){
       setWarning(true)
       setWarningMessage("Temperature is too high!");
     }
 
-    if ((data.humidity > humidityThreshold) && isHumidityWarningOn) {
+    if ((data.Humidity > humidityThreshold) && isHumidityWarningOn) {
       setWarning(true);
       setWarningMessage("Humidity is too high!");
     }
 
-    if ((data.waterLevel > waterThreshold) && isWaterWarningOn) {
+    if ((data.WaterLevel > waterThreshold) && isWaterWarningOn) {
       setWarning(true);
       setWarningMessage("Water level is too high!");
     }
   }
 
   function fetchData() {
-    fetch("./data.json")
+    fetch(address + 'realtimeData')
       .then((response) => response.json())
-      .then((data) => loadData(data))
+      .then((data) => loadData(data[0]))
       .catch((error) => console.error("Error fetching data:", error));
   }
 
@@ -99,14 +103,14 @@ const Tracker = ({
       </div>
       <div>
   
-  <div class="sensor-container">
-    <div class="waterlevel-container">
+  <div className="sensor-container">
+    <div className="waterlevel-container">
       <LinearGauge waterLevel={waterLevel} limitLevel={waterThreshold}/>
     </div>
       <DrawGauge value={temp} endValue={250} limitValue={tempThreshold} />
       <DrawGauge value={humidity} endValue={100} limitValue={humidityThreshold} />
   </div>
-  <div class = "chart-container">
+  <div className = "chart-container">
     <LineChart dataPoints={tempDataPoints} timePoints={timeArray} title={"temperature"} maxChartValue={250}/>
     <LineChart dataPoints={humidityDataPoints} timePoints={timeArray} title={"humidity"} maxChartValue={100}/>
     <LineChart dataPoints={waterLevelDataPoints} timePoints={timeArray} title={"waterLevel"} maxChartValue={100}/>

@@ -19,6 +19,21 @@ import serial
 from datetime import datetime
 import time
 
+# MariaDB Connection Configuration
+try:
+    conn = mariadb.connect(
+        user="tim",
+        password="root",
+        host="10.26.53.178",
+        port=3306,
+        database="sensordata"
+    )
+except mariadb.Error as e:
+    print(f"Error connecting to MariaDB: {e}")
+    sys.exit(1)
+
+cursor = conn.cursor()
+
 print("Beginning Realtime Marine Tracking...")
 
 ser = serial.Serial('/dev/ttyACM0', 9600)

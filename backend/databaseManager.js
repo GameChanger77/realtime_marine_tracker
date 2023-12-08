@@ -47,6 +47,23 @@ app.get("/listData", async (req, res) => {
   }
 });
 
+app.get("/realtimeData", async (req, res) => {
+  let conn;
+  try {
+    conn = await pool.getConnection();
+    console.log("Connected successfully to MariaDB");
+
+    const rows = await conn.query("SELECT * FROM realtimeData");
+    console.log(rows);
+    res.status(200).send(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  } finally {
+    if (conn) conn.release(); // release to pool
+  }
+});
+
 app.get("/listData/:id", async (req, res) => {
   let conn;
   const dataID = Number(req.params.id);

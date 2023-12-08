@@ -90,7 +90,7 @@ const LineChart = ({ dataPoints, timePoints, title, maxChartValue}) => {
     };
   }, [dataPoints]);
 
-  return <div class = "larger-outer-container">
+  return <div className = "larger-outer-container">
     <canvas ref={chartRef} className="single-chart-container"/>
     </div>;
 };
