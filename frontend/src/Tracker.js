@@ -28,7 +28,7 @@ const Tracker = ({
   const [waterLevelDataPoints, setWaterLevelDataPoints] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
   const [timeArray, setTimeArray] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
   
-  const address = "http://localhost:8081/"; // "http://10.26.53.178:8081/"; // Make sure to change settings.js too
+  const address = "http://10.26.49.231:8081/"; // "http://10.26.53.178:8081/"; // Make sure to change settings.js too
 
   function loadData(data) {
     setTemp(data.temp);
