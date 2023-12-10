@@ -1,6 +1,6 @@
   import React, { useRef, useEffect, useState } from 'react';
   import "./Tracker.css"
-  function DrawGauge({ value, endValue, limitValue }) {
+  function DrawGauge({ value, endValue, limitValue, label }) {
     const canvasRef = useRef(null);
     const [animatedValue, setAnimatedValue] = useState(value);
     const startValue = value;
@@ -138,7 +138,7 @@
       ctx.textBaseline = "alphabetic";
       ctx.translate(centerX, centerY);
       ctx.rotate(-135 / 180 * Math.PI);
-      ctx.fillText(startValue, 0, 0);
+      ctx.fillText(startValue + label, 0, 0);
       ctx.restore();
     }
 

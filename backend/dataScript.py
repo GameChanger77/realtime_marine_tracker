@@ -11,8 +11,8 @@ import mariadb
 # MariaDB Connection Configuration
 try:
     conn = mariadb.connect(
-        user="gamer",
-        password="gamer",
+        user="tim",
+        password="root",
         host="localhost",
         port=3306,
         database="sensordata"
@@ -27,13 +27,13 @@ print("Beginning Realtime Marine Tracking...")
 
 ser = serial.Serial('/dev/ttyACM0', 9600)
 
-lastTemp = None
-lastHumidity = None
+lastTemp = 0
+lastHumidity = 0
 
 while True:
     waterLevel = 0
 
-    if ser.in_waiting > 0:
+    while ser.in_waiting > 0:
         try:
             waterLevel = int(ser.readline().decode('utf-8').rstrip())
         except Exception as e:
@@ -42,12 +42,34 @@ while True:
     humidity = -1
     temperature = -99999
     humidity, temperature = Adafruit_DHT.read(11, 4)
-
-    if humidity is None and temperature is None and lastTemp is not None and lastHumidity is not None:
+    
+    
+    if temperature is None:
+        temperature  = lastTemp
+    else:
+        temperature = ((temperature * 1.8) + 32)
+    
+    if humidity is None:
         humidity = lastHumidity
-        temperature = lastTemp
+    
+    #if (humidity - lastHumidity > lastHumidity * 0.5) and (lastHumidity != 0):
+    #    humidity = lastHumidity
+    
+    #if(humidity > 100):
+     #   humidity = lastHumidity
+        
+    lastHumidity = humidity
+    lastTemp = temperature
+    
+    
+    
+    waterLevel = 0.75*((waterLevel) - 630)
+    if waterLevel < 0:
+        waterLevel = 0
+    if waterLevel > 100:
+        waterLevel = 100
+    
 
-    waterLevel = 1.1159 * (waterLevel) - 353
 
     # Real-time data
     dictionary = {
@@ -63,17 +85,17 @@ while True:
             (temperature, humidity, waterLevel)
         )
         conn.commit()
-        print("Real-time data updated successfully!")
+        print("Real-time data updated successfully!" + "Temperature " + str(temperature) + "Humidity" + str(humidity) + " " + "WaterLevel: " + str(waterLevel))
     except mariadb.Error as e:
         print(f"Error updating real-time data: {e}")
         conn.rollback()
 
     # Hourly data
     now = datetime.now()
-    current_time = now.strftime("%H:00")
+    current_time = now.strftime("%H:%M")
     current_time_seconds = now.strftime("%S")
 
-    if current_time_seconds == "20":
+    if current_time_seconds == "00":
         # Fetching the largest 'id' from the 'sensordata' table
         cursor.execute("SELECT MAX(id) FROM sensordata")
         largest_id = cursor.fetchone()[0]
@@ -101,7 +123,8 @@ while True:
         except mariadb.Error as e:
             print(f"Error saving hourly data: {e}")
             conn.rollback()
-
+    lastTemp = temperature
+    lastHumidity = humidity
     time.sleep(1)
 
 # Close the database connection at the end

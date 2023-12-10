@@ -24,7 +24,7 @@ try:
     conn = mariadb.connect(
         user="tim",
         password="root",
-        host="10.26.53.178",
+        host="10.26.49.231",
         port=3306,
         database="sensordata"
     )

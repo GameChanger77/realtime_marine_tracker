@@ -30,7 +30,7 @@ const Tracker = ({
   const [waterLevelDataPoints, setWaterLevelDataPoints] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
   const [timeArray, setTimeArray] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
   
-  const address = "http://10.26.49.231:8081/"; // "http://10.26.53.178:8081/"; // Make sure to change settings.js too
+  const address = "http://10.26.40.246:8081/"; // "http://10.26.53.178:8081/"; // Make sure to change settings.js too
 
   function loadData(data) {
     console.log(data);
@@ -42,16 +42,14 @@ const Tracker = ({
     if((data.Temperature > tempThreshold) && isTemperatureWarningOn){
       setWarning(true)
       setWarningMessage("Temperature is too high!");
-    }
-
-    if ((data.Humidity > humidityThreshold) && isHumidityWarningOn) {
+    }else if ((data.Humidity > humidityThreshold) && isHumidityWarningOn) {
       setWarning(true);
       setWarningMessage("Humidity is too high!");
-    }
-
-    if ((data.WaterLevel > waterThreshold) && isWaterWarningOn) {
+    } else if ((data.WaterLevel > waterThreshold) && isWaterWarningOn) {
       setWarning(true);
       setWarningMessage("Water level is too high!");
+    } else {
+      setWarning(false);
     }
   }
 
@@ -107,8 +105,8 @@ const Tracker = ({
     <div className="waterlevel-container">
       <LinearGauge waterLevel={waterLevel} limitLevel={waterThreshold}/>
     </div>
-      <DrawGauge value={temp} endValue={250} limitValue={tempThreshold} />
-      <DrawGauge value={humidity} endValue={100} limitValue={humidityThreshold} />
+      <DrawGauge value={temp} endValue={250} limitValue={tempThreshold} label = "°F"/>
+      <DrawGauge value={humidity} endValue={100} limitValue={humidityThreshold} label ="%"/>
   </div>
   <div className = "chart-container">
     <LineChart dataPoints={tempDataPoints} timePoints={timeArray} title={"temperature"} maxChartValue={250}/>

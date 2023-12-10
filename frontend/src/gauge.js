@@ -2,6 +2,10 @@ import React, { useRef, useEffect } from 'react';
 
 const LinearGauge = ({ waterLevel, limitLevel }) => {
   const canvasRef = useRef(null);
+  if(waterLevel < 0){
+      waterLevel =0;}
+  if(waterLevel > 100){
+      waterLevel =100;}
     console.log("water:"+ waterLevel);
     // waterLevel = 1.1159 * (waterLevel) - 353;
   useEffect(() => {

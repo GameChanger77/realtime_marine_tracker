@@ -10,15 +10,15 @@ var app = express();
 var bodyParser = require("body-parser");
 
 const mariadb = require("mariadb");
-const host =  "localhost"; // "10.26.53.178"; 
+const host =  "10.26.40.246"; // "10.26.53.178"; 
 
 const pool = mariadb.createPool({
-  port: 3307,  // 3306, // 3306 was already in use from mySql on my computer 
+  port: 3306,  // 3306, // 3306 was already in use from mySql on my computer 
   // user: "tim",
   // password: "root",
   host: host,
-  user: "root",
-  password: "gamer",
+  user: "tim",
+  password: "root",
   database: "sensordata",
   connectionLimit: 5,
 });
