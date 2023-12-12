@@ -15,7 +15,7 @@ function App() {
   const [isTemperatureWarningOn, setTemperatureWarningOn] = useState(true);
   const [isWaterWarningOn, setWaterWarningOn] = useState(true);
 
-  const address = "http://10.26.40.246:8081/"; // "http://10.26.53.178:8081/"; // Make sure to change tracker.js too
+  const address = "http://10.27.176.36:8081/"; // "http://10.26.53.178:8081/"; // Make sure to change tracker.js too
 
   useEffect(() => {
     if (!shouldUpdateSettings)
