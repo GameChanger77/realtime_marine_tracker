@@ -10,7 +10,7 @@ var app = express();
 var bodyParser = require("body-parser");
 
 const mariadb = require("mariadb");
-const host =  "10.27.176.36"; // "10.26.53.178"; 
+const host =  "10.26.48.134"; // "10.26.53.178"; 
 
 const pool = mariadb.createPool({
   port: 3306,  // 3306, // 3306 was already in use from mySql on my computer 
